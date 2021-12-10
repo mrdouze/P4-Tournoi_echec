@@ -2,6 +2,7 @@ from model.joueur_model import Joueur
 from model.tournoi_model import Tournoi
 from view.joueur_view import JoueurView
 from view.tournoi_view import TournoiView
+from view.tournee_view import TourneeView
 
 
 class GenererTournoi:
@@ -9,10 +10,6 @@ class GenererTournoi:
     def lancer_tournoi(cls):
         tournoi = cls.creation_tournoi()
         cls.lancer_les_tournees(tournoi)
-        #TODO:Recuperer les scores et les enregistrer
-
-
-        #TODO:continuer les autres rounds
 
     @classmethod
     def creation_tournoi(cls):
@@ -27,7 +24,7 @@ class GenererTournoi:
                 "bullet",
                 "Description du tournoi !"
             )
-            tournoi.ajouter_joueur(Joueur('Monge','Olivier','19/12/90','m','8'))
+            tournoi.ajouter_joueur(Joueur('Cassin','Marc','19/12/90','m','8'))
             tournoi.ajouter_joueur(Joueur('Duff','John','12/04/78','m', '7'))
             tournoi.ajouter_joueur(Joueur('Zeblouse','Agathe','12/12/89','f','6'))
             tournoi.ajouter_joueur(Joueur('Lacaisse','Alphonse','06/04/78','m','5'))
@@ -45,13 +42,8 @@ class GenererTournoi:
                 controle_de_temps=info_tournoi[4],
                 description=info_tournoi[5]
             )
-            #TODO mise en commentaire --> la section de récupération des infos joueur du tournoi sont dans le tournoi_view
-            #TODO:mettre les prints et input dans view
-            print('-------------------------------------')
-            print('initialisation des joueurs du tournoi')
-            print('-------------------------------------')
 
-            nb_joueurs = int(input("combien de joueurs voulez-vous insérer ?"))
+            nb_joueurs = JoueurView.entrer_nb_joueur()
 
             for i in range(nb_joueurs):
                 info_joueurs = JoueurView.recuperer_info_joueurs()
@@ -74,21 +66,19 @@ class GenererTournoi:
             tournee = tournoi.generer_prochaine_tournee()
             print('tournee ',tournee)
             for match in tournee.liste_matchs:
-                print("joueur 1: ", match[0])
-                print("joueur 2: ", match[1])
-                reponse = input("joueur 1> 1,  joueur 2> 2, egalité> 3 :")
+                reponse = TourneeView.entrer_score(match)
                 if reponse == '1':
                     match[0].gagne()
+                    match[1].perd()
                 elif reponse == '2':
                     match[1].gagne()
+                    match[0].perd()
                 elif reponse == '3':
                     match[0].egalite()
                     match[1].egalite()
                 else:
-                    print ('entree non valide')
-                    continue
-                print(match[0], match[0].points, ' point')
-                print(match[1], match[1].points, ' point')
+                    raise ValueError("mauvaise entrée")
+            print(tournoi.classement_par_points())
             input('tapez entree pour tournee suivante ')
 
 

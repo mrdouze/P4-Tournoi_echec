@@ -22,6 +22,5 @@ class TournoiView:
         else:
             info_tournoi.append(controle_de_temps)
         info_tournoi.append(input("description :"))
-
         return info_tournoi
 

@@ -14,3 +14,11 @@ class JoueurView:
         print('-----------------------------')
         return info_joueurs
 
+    @classmethod
+    def entrer_nb_joueur(cls):
+        print('-------------------------------------')
+        print('initialisation des joueurs du tournoi')
+        print('-------------------------------------')
+
+        nb_joueurs = int(input("combien de joueurs voulez-vous insérer ?"))
+        return nb_joueurs
