@@ -4,6 +4,7 @@ from view.joueur_view import JoueurView
 from view.tournoi_view import TournoiView
 from view.tournee_view import TourneeView
 from controller.database_controller import Database
+import random
 
 
 class GenererTournoi:
@@ -18,10 +19,13 @@ class GenererTournoi:
         # TODO: partie ci dessous a retirer
         reponse = input('voulez vous utiliser le tournoi par defaut o/n? ')
         if reponse == 'o':
+            nom_du_tournoi = 'tournoi numéro:' + str(random.randrange(1, 10000))
+            date_tournoi = str(random.randrange(1, 30)) + "/" + str(random.randrange(1, 12)) + "/" + str(
+                random.randrange(1960, 2010))
             tournoi = Tournoi(
-                "Tournoi par défaut",
+                nom_du_tournoi,
                 "Paris",
-                "20012022",
+                date_tournoi,
                 "bullet",
                 "Description du tournoi !"
             )
@@ -73,7 +77,7 @@ class GenererTournoi:
         :return:
         """
         for i in range(int(tournoi.nombre_de_tour)):
-            print("lancement du round" + str(i + 1))
+            print("lancement du round " + str(i + 1))
             tournee = tournoi.generer_prochaine_tournee()
             print('tournee ', tournee)
             for match in tournee.liste_matchs:
@@ -89,7 +93,9 @@ class GenererTournoi:
                     match[1].egalite()
                 else:
                     raise ValueError("mauvaise entrée")
-                tournoi_serialise = Database.serialiser_tournoi(tournoi)
-                Database.update_tournoi(tournoi_serialise)
+                # tournoi_serialise = Database.serialiser_tournoi(tournoi)
+                # Database.update_tournoi(tournoi_serialise)
+            tournoi_serialise = Database.serialiser_tournoi(tournoi)
+            Database.update_tournoi(tournoi_serialise)
             print(tournoi.classement_par_points())
             input('tapez entree pour tournee suivante ')

@@ -41,11 +41,11 @@ class ReportingView:
         print('liste des tournois triés par date')
         print('---------------------------------')
         #print(tableau_liste_tournois.style.hide_columns(['tournees', 'joueurs']))
-        print(tableau_liste_tournois.drop(columns=['tournees', 'joueurs']))
+        print(tableau_liste_tournois.drop(columns=['tournees', 'joueurs', 'description']))
         input()
 
     @classmethod
-    def tri_joueur_tournoi(cls):
+    def tri_joueur_tournoi(cls, menu_input):
         table_tournoi = Database.database.table('table_tournoi')
         vue_tournois = Database.extraire_tournois(table_tournoi)
         tableau = pd.DataFrame(vue_tournois)
@@ -53,24 +53,28 @@ class ReportingView:
         print('------------------')
         print('liste des tournois')
         print('------------------')
-        print(tableau_liste_tournois.drop(columns=["tournees", "joueurs"]))
+        print(tableau_liste_tournois.drop(columns=["tournees", "joueurs", "description"]))
         index_tournoi = input('selectionnez un tournoi :')
-        ligne_liste_joueurs = tableau_liste_tournois.iloc[int(index_tournoi)]
-        print(ligne_liste_joueurs)
-        return index_tournoi
-
-    @classmethod
-    def liste_joueurs_tournoi_alpha(cls, index_tournoi):
-        table_tournoi = Database.database.table('table-tournoi')
-        vue_tournoi = Database.extraire_tournois(table_tournoi)
-        tableau = pd.DataFrame(vue_tournoi)
-        tournoi = tableau.index.values
-        print(vue_tournoi)
+        liste_joueurs = tableau_liste_tournois.iloc[int(index_tournoi), 5]
+        joueurs_a_trier = pd.DataFrame(liste_joueurs)
+        if menu_input == '3':
+            print(joueurs_a_trier.sort_values(by='nom'))
+        elif menu_input == '4':
+            print(joueurs_a_trier.sort_values(by='classement'))
         input()
 
     @classmethod
-    def liste_joueurs_tournoi_classement(cls, index_tournoi):
-        table_tournoi = Database.database.table('table-tournoi')
-        vue_tournoi = Database.extraire_tournois(table_tournoi)
-        print(vue_tournoi)
+    def liste_tournees(cls):
+        table_tournoi = Database.database.table('table_tournoi')
+        vue_tournois = Database.extraire_tournois(table_tournoi)
+        tableau = pd.DataFrame(vue_tournois)
+        tableau_liste_tournois = tableau.sort_values(by='date')
+        print('------------------')
+        print('liste des tournois')
+        print('------------------')
+        print(tableau_liste_tournois.drop(columns=["tournees", "joueurs"]))
+        index_tournoi = input('selectionnez un tournoi :')
+        liste_tournees = tableau_liste_tournois.iloc[int(index_tournoi), 4]
+        reporting_tournées = pd.DataFrame(liste_tournees)
+        print(reporting_tournées)
         input()

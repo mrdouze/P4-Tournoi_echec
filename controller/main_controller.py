@@ -37,20 +37,20 @@ class MenuPrincipal:
             ReportingView.tri_joueur_classement()
             cls.reporting()
         elif menu_input == "3":
-            index_tableau = ReportingView.tri_joueur_tournoi()
-            ReportingView.liste_joueurs_tournoi_alpha(index_tableau)
-
+            index_tableau = ReportingView.tri_joueur_tournoi(menu_input)
+            ReportingView.tri_joueur_tournoi(index_tableau)
             cls.reporting()
         elif menu_input == "4":
-            index_tableau = ReportingView.tri_joueur_tournoi()
-            ReportingView.liste_joueurs_tournoi_classement(index_tableau)
+            index_tableau = ReportingView.tri_joueur_tournoi(menu_input)
+            ReportingView.tri_joueur_tournoi(index_tableau)
             cls.reporting()
             pass
         elif menu_input == "5":
             ReportingView.reporting_liste_tournoi()
             cls.reporting()
         elif menu_input == "6":
-            pass
+            ReportingView.liste_tournees()
+            cls.reporting()
         elif menu_input == "7":
             pass
         elif menu_input == "8":

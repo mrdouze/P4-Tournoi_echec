@@ -44,8 +44,7 @@ class Database:
         return liste_de_matchs_serialisee
 
     @classmethod
-    #serialiser liste_matchs
-    def serialiser_tournees(cls,tournees):
+    def serialiser_tournees(cls, tournees):
         tournee_serialisee = {
             'nom': tournees.nom,
             'liste_matchs': [cls.serialiser_liste_matchs(m) for m in tournees.liste_matchs]
@@ -59,7 +58,8 @@ class Database:
             serialized = cls.serialiser_tournoi(tournoi)
         else:
             serialized = tournoi
-        table_tournoi.update(serialized, Query().nom == serialized.get('nom'))
+        input('ERREUR !!!!')
+        table_tournoi.upsert(serialized, Query().nom == serialized.get('nom'))
         return
 
     @classmethod
@@ -71,7 +71,7 @@ class Database:
             'nombre_de_tours': tournoi.nombre_de_tour,
             'tournees': [cls.serialiser_tournees(t) for t in tournoi.tournees],
             'joueurs': [cls.serialiser_joueur_pour_tournoi(j) for j in tournoi.joueurs],
-            'contole_de_temps': tournoi.controle_de_temps,
+            'controle_de_temps': tournoi.controle_de_temps,
             'description': tournoi.description
         }
         return tournoi_serialise
@@ -83,20 +83,20 @@ class Database:
         return
 
     @classmethod
-    def extraire_joueur(cls,table_joueur):
+    def extraire_joueur(cls, table_joueur):
         joueurs_serialises = table_joueur.all()
         return joueurs_serialises
 
-    @classmethod
-    def reporting_tournoi_joueur(cls, index_tableau):
-        liste_joueurs = []
-        requete = Query()
-        table_tournoi = cls.database.table('table_tournoi')
-        tournoi_serialisé = cls.extraire_tournois(table_tournoi)
+    # @classmethod
+    # def reporting_tournoi_joueur(cls, index_tableau):
+    #     liste_joueurs = []
+    #     requete = Query()
+    #     table_tournoi = cls.database.table('table_tournoi')
+    #     tournoi_serialise = cls.extraire_tournois(table_tournoi)
+    #
+    #     return liste_joueurs
 
-        return liste_joueurs
-
     @classmethod
-    def extraire_tournois(cls,table_tournoi):
+    def extraire_tournois(cls, table_tournoi):
         tournoi_serialise = table_tournoi.all()
         return tournoi_serialise
