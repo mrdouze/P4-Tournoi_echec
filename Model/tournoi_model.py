@@ -1,5 +1,6 @@
 from model.tournee_model import Tournee
 
+
 class Tournoi:
     def __init__(self, nom, lieu, date, controle_de_temps, description, nombre_de_tour=4, tournees=None, joueurs=None):
         if tournees is None:
@@ -15,59 +16,80 @@ class Tournoi:
         self.controle_de_temps = controle_de_temps
         self.description = description
 
+    def __repr__(self):
+        return f"{self.nom} {self.date}"
+
     def ajouter_joueur(self, joueur):
         self.joueurs.append(joueur)
 
-    @classmethod
-    def generer_paires_tour1(cls, liste_joueur):
+    def classement_par_rang(self):
+        return sorted(self.joueurs, key=lambda j: j.classement, reverse=True)
+
+    def generer_paires_tour1(self):
         """
-        récupère une liste de joueurs et renvoie une liste de paires basée sur le classement
-        :param liste_joueur:
+        genere des pairs sur un critère de classement
         :return:
         """
-        # premiere tournee du tournoi#
-        liste_joueur = sorted(liste_joueur, key=lambda j: j.classement, reverse=True)
+        liste_joueur = self.classement_par_rang()
         moitie = len(liste_joueur) // 2
         moitie_superieur = liste_joueur[moitie:]
         moitie_inferieure = liste_joueur[:moitie]
         paires_tour1 = list(zip(moitie_superieur, moitie_inferieure))
         return paires_tour1
 
-    @classmethod
-    def generer_paires_autes_tours(cls, liste_joueur):
+    def classement_par_points(self):
+        return sorted(self.joueurs, key=lambda i: (i.points, i.classement), reverse=True)
+
+    def ont_deja_joues(self, joueur1, joueur2):
         """
-        recupere une liste de joueur et renvoie une liste de paires basée sur le nombre de points gagnés dans le tournoi
-        :param liste_joueur:
+        chercher dans l'historique des matchs si cette paire existe
+        :param joueur1:
+        :param joueur2:
         :return:
         """
-        return cls.generer_paires_tour1(liste_joueur)
-        # pour les tournee de 2 a 4
-        compteur_tour = 0
-        paires_autres_tours = []
-        joueur_1 = 0
-        joueur_2 = 1
-        liste_joueur = sorted(liste_joueur, key=lambda i: i.points)
+        for tournee in self.tournees:
+            for match in tournee.liste_matchs:
+                if match[0] == joueur1 and match[1] == joueur2:
+                    return True
+                if match[0] == joueur2 and match[1] == joueur1:
+                    return True
+        return False
 
-        while compteur_tour < 4:
-            ##
-            # implémenter un test si paires deja jouees
-            ##
-            paires_autres_tours = (liste_joueur[joueur_1], liste_joueur[joueur_2])
-            paires_autres_tours.append(paires_autres_tours)
-            joueur_1 += 2
-            joueur_2 += 2
-            compteur_tour += 1
+    def trouve_adversaire(self, joueur, candidats):
+        """
+        trouver un joueur parmis la liste des candidats qui n'a jamais joué avec le prmeier joueur
+        :param joueur:
+        :param candidats:
+        :return:
+        """
+        for candidat in candidats:
+            if not self.ont_deja_joues(candidat, joueur):
+                return candidat
+        return candidats[0]
 
-        return paires_autres_tours
+    def generer_paires_autes_tours(self):
+        """
+        générer les paires de joueurs pour les tours autre que le premier
+        :return:
+        """
+
+        liste_joueurs = self.classement_par_points()
+        list_matchs = list()
+        while len(liste_joueurs) > 1:
+            premier_joueur = liste_joueurs.pop(0)
+            deuxieme_joueur = self.trouve_adversaire(premier_joueur, liste_joueurs)
+            liste_joueurs.remove(deuxieme_joueur)
+            list_matchs.append([premier_joueur, deuxieme_joueur])
+        return list_matchs
 
     def generate_first_round(self):
-        liste_paires = self.generer_paires_tour1(self.joueurs)
+        liste_paires = self.generer_paires_tour1()
         tournee = Tournee("Tournee 1", liste_paires)
         self.tournees.append(tournee)
         return tournee
 
     def generate_others_rounds(self):
-        liste_paires = self.generer_paires_autes_tours(self.joueurs)
+        liste_paires = self.generer_paires_autes_tours()
         tournee = Tournee("Tournee " + str(len(self.tournees) + 1), liste_paires)
         self.tournees.append(tournee)
         return tournee

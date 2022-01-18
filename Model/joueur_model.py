@@ -9,7 +9,7 @@ class Joueur:
         self.points = points
 
     def __repr__(self):
-        return self.prenom
+        return f"{self.prenom} {self.nom}"
 
     def gagne(self):
         self.points += 1
