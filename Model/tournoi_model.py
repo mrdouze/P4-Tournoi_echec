@@ -1,4 +1,5 @@
 from model.tournee_model import Tournee
+import datetime
 
 
 class Tournoi:
@@ -21,6 +22,7 @@ class Tournoi:
 
     def ajouter_joueur(self, joueur):
         self.joueurs.append(joueur)
+        return
 
     def classement_par_rang(self):
         return sorted(self.joueurs, key=lambda j: j.classement, reverse=True)
@@ -84,13 +86,13 @@ class Tournoi:
 
     def generate_first_round(self):
         liste_paires = self.generer_paires_tour1()
-        tournee = Tournee("Tournee 1", liste_paires)
+        tournee = Tournee("Tournee 1", datetime.date, liste_paires)
         self.tournees.append(tournee)
         return tournee
 
     def generate_others_rounds(self):
         liste_paires = self.generer_paires_autes_tours()
-        tournee = Tournee("Tournee " + str(len(self.tournees) + 1), liste_paires)
+        tournee = Tournee("Tournee " + str(len(self.tournees) + 1), datetime.date, liste_paires)
         self.tournees.append(tournee)
         return tournee
 

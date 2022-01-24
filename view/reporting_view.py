@@ -1,12 +1,16 @@
 import pandas as pd
-import jinja2
 from controller.database_controller import Database
+
 pd.set_option('display.max_columns', None)
 
 
 class ReportingView:
     @classmethod
     def tri_joueur_alpha(cls):
+        """
+        affichage table joueur en utilisant panda, tri alpha
+        :return:
+        """
         table_joueur = Database.database.table('table_joueur')
         vue_joueur_alpha = Database.extraire_joueur(table_joueur)
         tableau_joueur = pd.DataFrame(vue_joueur_alpha)
@@ -19,6 +23,10 @@ class ReportingView:
 
     @classmethod
     def tri_joueur_classement(cls):
+        """
+        affichage table joueur en utilisant panda, tri par le champs classement
+        :return:
+        """
         table_joueur = Database.database.table('table_joueur')
         vue_joueur_classement = Database.extraire_joueur(table_joueur)
         tableau_joueur = pd.DataFrame(vue_joueur_classement)
@@ -31,25 +39,34 @@ class ReportingView:
 
     @classmethod
     def reporting_liste_tournoi(cls):
+        """
+        option 5 du menu reporting, affichage de la liste des tournois triés par date
+        :return:
+        """
         table_tournoi = Database.database.table('table_tournoi')
         vue_tournois = Database.extraire_tournois(table_tournoi)
         tableau = pd.DataFrame(vue_tournois)
         tableau_liste_tournois = tableau.sort_values(by='date')
-        print (tableau_liste_tournois)
-        #tableau_liste_tournois = tableau.style.hide_columns(['tournees', 'joueurs'])
+        print(tableau_liste_tournois)
+        # tableau_liste_tournois = tableau.style.hide_columns(['tournees', 'joueurs'])
         print('---------------------------------')
         print('liste des tournois triés par date')
         print('---------------------------------')
-        #print(tableau_liste_tournois.style.hide_columns(['tournees', 'joueurs']))
+        # print(tableau_liste_tournois.style.hide_columns(['tournees', 'joueurs']))
         print(tableau_liste_tournois.drop(columns=['tournees', 'joueurs', 'description']))
         input()
 
     @classmethod
     def tri_joueur_tournoi(cls, menu_input):
+        """
+        option 3 et 4 du menu reporting. affichage des joueurs d'un tournoi, tri en fonction de l'entrée du menu.
+        :param menu_input:
+        :return:
+        """
         table_tournoi = Database.database.table('table_tournoi')
         vue_tournois = Database.extraire_tournois(table_tournoi)
         tableau = pd.DataFrame(vue_tournois)
-        tableau_liste_tournois =tableau.sort_values(by='date')
+        tableau_liste_tournois = tableau.sort_values(by='date')
         print('------------------')
         print('liste des tournois')
         print('------------------')
@@ -65,6 +82,10 @@ class ReportingView:
 
     @classmethod
     def liste_tournees(cls):
+        """
+        option 6 du menu reporting. affichage des tournées d'un tournoi
+        :return:
+        """
         table_tournoi = Database.database.table('table_tournoi')
         vue_tournois = Database.extraire_tournois(table_tournoi)
         tableau = pd.DataFrame(vue_tournois)
@@ -75,6 +96,6 @@ class ReportingView:
         print(tableau_liste_tournois.drop(columns=["tournees", "joueurs"]))
         index_tournoi = input('selectionnez un tournoi :')
         liste_tournees = tableau_liste_tournois.iloc[int(index_tournoi), 4]
-        reporting_tournées = pd.DataFrame(liste_tournees)
-        print(reporting_tournées)
+        reporting_tournees = pd.DataFrame(liste_tournees)
+        print(reporting_tournees)
         input()

@@ -12,6 +12,10 @@ class MenuPrincipal:
 
     @classmethod
     def debut(cls):
+        """
+        gestion des entrées du menu principal
+        :return:
+        """
         menu_input = View.afficher_menu()
         if menu_input == "1":
             print('choix 1')
@@ -29,6 +33,10 @@ class MenuPrincipal:
 
     @classmethod
     def reporting(cls):
+        """
+        gestion des entrées du menu reporting
+        :return:
+        """
         menu_input = TournoiView.choix_reportings_tournois()
         if menu_input == "1":
             ReportingView.tri_joueur_alpha()
