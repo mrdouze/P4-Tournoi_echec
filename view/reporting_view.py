@@ -1,5 +1,7 @@
 import pandas as pd
 from controller.database_controller import Database
+import controller.main_controller
+
 
 pd.set_option('display.max_columns', None)
 
@@ -19,7 +21,8 @@ class ReportingView:
         print('classement des joueurs par ordre alphabétique')
         print('---------------------------------------------')
         print(tableau_joueur_alpha)
-        input()
+        input('Appuyez sur une touche pour revenir à la selection')
+        controller.main_controller.MenuPrincipal.reporting()
 
     @classmethod
     def tri_joueur_classement(cls):
@@ -35,7 +38,8 @@ class ReportingView:
         print('classement des joueurs par ordre de classement')
         print('----------------------------------------------')
         print(tableau_joueur_classement)
-        input()
+        input('Appuyez sur une touche pour revenir à la selection')
+        controller.main_controller.MenuPrincipal.reporting()
 
     @classmethod
     def reporting_liste_tournoi(cls):
@@ -48,13 +52,13 @@ class ReportingView:
         tableau = pd.DataFrame(vue_tournois)
         tableau_liste_tournois = tableau.sort_values(by='date')
         print(tableau_liste_tournois)
-        # tableau_liste_tournois = tableau.style.hide_columns(['tournees', 'joueurs'])
         print('---------------------------------')
         print('liste des tournois triés par date')
         print('---------------------------------')
         # print(tableau_liste_tournois.style.hide_columns(['tournees', 'joueurs']))
         print(tableau_liste_tournois.drop(columns=['tournees', 'joueurs', 'description']))
-        input()
+        input('Appuyez sur une touche pour revenir à la selection')
+        controller.main_controller.MenuPrincipal.reporting()
 
     @classmethod
     def tri_joueur_tournoi(cls, menu_input):
@@ -78,7 +82,8 @@ class ReportingView:
             print(joueurs_a_trier.sort_values(by='nom'))
         elif menu_input == '4':
             print(joueurs_a_trier.sort_values(by='classement'))
-        input()
+        input('Appuyez sur une touche pour revenir à la selection')
+        controller.main_controller.MenuPrincipal.reporting()
 
     @classmethod
     def liste_tournees(cls):
@@ -93,9 +98,16 @@ class ReportingView:
         print('------------------')
         print('liste des tournois')
         print('------------------')
-        print(tableau_liste_tournois.drop(columns=["tournees", "joueurs"]))
+        print(tableau_liste_tournois.drop(columns=["tournees", "joueurs", "description"]))
         index_tournoi = input('selectionnez un tournoi :')
         liste_tournees = tableau_liste_tournois.iloc[int(index_tournoi), 4]
-        reporting_tournees = pd.DataFrame(liste_tournees)
-        print(reporting_tournees)
-        input()
+        # reporting_tournees = pd.DataFrame(liste_tournees)
+        for element in liste_tournees:
+            reporting_tournees = pd.DataFrame(liste_tournees)
+            print(reporting_tournees[element])
+            for j in reporting_tournees:
+                liste_match = pd.DataFrame(reporting_tournees)
+                print(liste_match[j])
+
+        input('Appuyez sur une touche pour revenir à la selection')
+        controller.main_controller.MenuPrincipal.reporting()

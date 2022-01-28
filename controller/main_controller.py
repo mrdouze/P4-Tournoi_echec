@@ -1,8 +1,6 @@
 from view.reporting_view import ReportingView
 import sys
 import os
-
-
 from controller.tournoi_controller import GenererTournoi
 from view.main_view import View
 from view.tournoi_view import TournoiView
