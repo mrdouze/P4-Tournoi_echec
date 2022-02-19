@@ -19,9 +19,9 @@ mêmes objectifs mais fonctionnant online, mais qui ne donnait pas satisfaction 
 - dans votre terminal positionnez vous dans le répertoire souhaité pour lancer l'application:
 > cd  MonDossier
 - cloner le projet à partir de github
-> git clone https://github.com/mrdouze/formation\_oc\_python.git
+> git clone https://github.com/mrdouze/P4-Tournoi_echec.git
 - positionner vous dans le repertoire projet:
-> cd formation\_oc\_python
+> cd P4-Tournoi_echec
 - lancez et activezl'environnement
 > python -m venv venv
 > > venv\Scripts\activate
