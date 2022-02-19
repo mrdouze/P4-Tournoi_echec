@@ -1,4 +1,3 @@
-import flake8
 
 from controller import main_controller
 

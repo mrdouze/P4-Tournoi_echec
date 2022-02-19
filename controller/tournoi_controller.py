@@ -40,7 +40,7 @@ class GenererTournoi:
             joueur_serialise = Database.serialiser_joueur(joueur)
             Database.inserer_joueur(joueur_serialise)
             rang = random.randrange(1, 1000)
-            joueur = Joueur('Zeblouse', 'Agathe', '12/12/89', 'f',rang, 0)
+            joueur = Joueur('Zeblouse', 'Agathe', '12/12/89', 'f', rang, 0)
             tournoi.ajouter_joueur(joueur)
             joueur_serialise = Database.serialiser_joueur(joueur)
             Database.inserer_joueur(joueur_serialise)

@@ -90,8 +90,7 @@ class ReportingView:
         option 6 du menu reporting. affichage des tournées d'un tournoi
         :return:
         """
-        tableau_liste_tournees = []
-        tableau_liste_match = []
+
         table_tournoi = Database.database.table('table_tournoi')
         vue_tournois = Database.extraire_tournois(table_tournoi)
         tableau = pd.DataFrame(vue_tournois)
@@ -102,10 +101,8 @@ class ReportingView:
         print(tableau_liste_tournois.drop(columns=["tournees", "joueurs", "description"]))
         index_tournoi = input('selectionnez un tournoi :')
         liste_tournees = tableau_liste_tournois.iloc[int(index_tournoi), 4]
-        # reporting_tournees = pd.DataFrame(liste_tournees)
         for element in liste_tournees:
             index_tournees = 0
-            reporting_tournees = pd.DataFrame(liste_tournees)
             tableau_liste_tournees = element['nom']
             liste_matchs = element['liste_matchs']
             tableau_liste_match = pd.DataFrame(liste_matchs)
@@ -113,10 +110,8 @@ class ReportingView:
             print(tableau_liste_tournees)
             print("-------------------------------")
             for i in range(len(tableau_liste_match) - 1):
-                #input()
                 joueur1 = tableau_liste_match.iloc[i, 0]
                 print(joueur1['prenom']+' '+joueur1['nom'])
-                #input()
                 print('VS')
                 joueur2 = tableau_liste_match.iloc[i, 1]
                 print(joueur2['prenom']+' '+joueur2['nom'])

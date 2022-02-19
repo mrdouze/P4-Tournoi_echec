@@ -132,7 +132,6 @@ class Database:
         joueurs_serialises = table_joueur.all()
         return joueurs_serialises
 
-
     @classmethod
     def extraire_tournois(cls, table_tournoi):
         """

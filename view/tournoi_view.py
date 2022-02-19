@@ -1,6 +1,3 @@
-from view.joueur_view import JoueurView
-#from controller.tournoi_controller import GenererTournoi
-
 
 class TournoiView:
     @staticmethod
