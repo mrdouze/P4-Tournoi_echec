@@ -16,7 +16,7 @@ class GenererTournoi:
 
     @classmethod
     def creation_tournoi(cls):
-        # TODO: partie ci dessous a retirer
+        # TODO: partie ci dessous a retirer. uniquement pour démo client.
         reponse = input('voulez vous utiliser le tournoi par defaut o/n? ')
         if reponse == 'o':
             nom_du_tournoi = 'tournoi numéro:' + str(random.randrange(1, 10000))
@@ -71,7 +71,7 @@ class GenererTournoi:
             Database.inserer_joueur(joueur_serialise)
             tournoi_serialise = Database.serialiser_tournoi(tournoi)
             Database.inserer_tournoi(tournoi_serialise)
-
+        # TODO partie ci dessus à retirer de la version finale
         else:
             info_tournoi = TournoiView.creer_tournoi()
             tournoi = Tournoi(

@@ -50,7 +50,6 @@ class ReportingView:
         vue_tournois = Database.extraire_tournois(table_tournoi)
         tableau = pd.DataFrame(vue_tournois)
         tableau_liste_tournois = tableau.sort_values(by='date')
-        print(tableau_liste_tournois)
         print('---------------------------------')
         print('liste des tournois triés par date')
         print('---------------------------------')
@@ -87,7 +86,7 @@ class ReportingView:
     @classmethod
     def liste_tournees(cls):
         """
-        option 6 du menu reporting. affichage des tournées d'un tournoi
+        option 6 et 7 du menu reporting. affichage des tournées d'un tournoi + matchs tournees
         :return:
         """
 

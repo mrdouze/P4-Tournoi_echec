@@ -22,7 +22,6 @@ class MenuPrincipal:
             cls.reporting()
         elif menu_input == "3":
             print("Vous quittez le programme")
-            os.system('clear')
             sys.exit()
             pass
         else:
