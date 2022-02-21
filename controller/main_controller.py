@@ -58,7 +58,7 @@ class MenuPrincipal:
             ReportingView.liste_tournees()
             cls.reporting()
         elif menu_input == "7":
-            pass
+            ReportingView.liste_tournees()
         elif menu_input == "8":
             cls.debut()
         else:
