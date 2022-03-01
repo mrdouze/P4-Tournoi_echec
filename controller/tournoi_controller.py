@@ -17,7 +17,10 @@ class GenererTournoi:
     @classmethod
     def creation_tournoi(cls):
         # TODO: partie ci dessous a retirer. uniquement pour démo client.
-        reponse = input('voulez vous utiliser le tournoi par defaut o/n? ')
+        reponse = ''
+        reponse_possible =('o', 'n')
+        while reponse not in reponse_possible:
+            reponse = input('voulez vous utiliser le tournoi par defaut o/n? ')
         if reponse == 'o':
             nom_du_tournoi = 'tournoi numéro:' + str(random.randrange(1, 10000))
             date_tournoi = str(random.randrange(1, 30)) + "/" + str(random.randrange(1, 12)) + "/" + str(

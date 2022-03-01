@@ -8,7 +8,12 @@ class TournoiView:
         info_tournoi.append(input("nom :"))
         info_tournoi.append(input("lieu :"))
         info_tournoi.append(input("date jj/mm/aa:"))
-        info_tournoi.append(input("nombre de tour :"))
+        #info_tournoi.append(input("nombre de tour :"))
+        nombre_de_tour = input('Nombre de tour =')
+        while not nombre_de_tour.isdigit():
+            nombre_de_tour = input('Nombre de tour (entier) =')
+        info_tournoi.append(nombre_de_tour)
+
         controle_de_temps = input("controle de temps a:bullet. b:blitz. c:coups rapide :")
         if controle_de_temps == "a":
             info_tournoi.append("bullet")

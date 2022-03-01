@@ -9,7 +9,11 @@ class JoueurView:
         info_joueurs.append(input('prenom ='))
         info_joueurs.append(input('date de naissance jjmmaa ='))
         info_joueurs.append(input('sexe m/f ='))
-        info_joueurs.append(input('classement ='))
+        # info_joueurs.append(input('classement ='))
+        classement_joueur = input('classement =')
+        while not classement_joueur.isdigit():
+            classement_joueur = input('Classement (entier) = ')
+        info_joueurs.append(classement_joueur)
 
         print('-----------------------------')
         return info_joueurs
